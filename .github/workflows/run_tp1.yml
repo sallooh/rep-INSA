@@ -10,26 +10,22 @@ jobs:
   build-and-run:
     runs-on: ubuntu-latest
 
-    # ✅ Donne au GITHUB_TOKEN le droit d'écrire
+    # Donne au GITHUB_TOKEN le droit d'écrire
     permissions:
       contents: write
 
     steps:
-    # 1️⃣ Checkout le repo
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         persist-credentials: true  # nécessaire pour push
 
-    # 2️⃣ Build l'image Docker
     - name: Build Docker image
       run: docker build -t associativity .
 
-    # 3️⃣ Run Docker container
     - name: Run container
       run: docker run --name assoc_run associativity
 
-    # 4️⃣ Commit & push le résultat
     - name: Push results
       run: |
         git config --global user.name "github-actions"
