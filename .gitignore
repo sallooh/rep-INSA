@@ -1,0 +1,16 @@
+# Virtual environments
+.venv/
+
+# Nix garbage collection roots & profiles
+.nix-gcroots/
+.nix-profile
+
+# Build/result files
+result
+
+# Python cache
+*.pyc
+__pycache__/
+
+# Logs or temporary files
+*.log
