@@ -1,11 +1,15 @@
 FROM python:3.13
-WORKDIR /usr/local/app
+WORKDIR /usr/src/app
 
-# Copy in the source code
-COPY ./tp1_associativity.py ./
+# Installer git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-# Setup an app user so the container doesn't run as the root user
+# Copier le code
+COPY tp1_associativity.py ./
+
+# Créer un utilisateur non-root
 RUN useradd app
 USER app
 
+# Commande par défaut
 CMD ["python3", "tp1_associativity.py"]
