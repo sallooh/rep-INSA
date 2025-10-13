@@ -1,0 +1,8 @@
+let
+  rev = "24.05";      # Exemple : version stable 24.05
+  sha256 = "";
+in
+import (builtins.fetchTarball {
+  url = "https://github.com/NixOS/nixpkgs/archive/nixos-${rev}.tar.gz";
+  inherit sha256;
+})
