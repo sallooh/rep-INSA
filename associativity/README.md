@@ -8,6 +8,6 @@ Est-ce que `(x + y) + z == x + (y + z)` est toujours vrai ?
 
 - avoir la version python 3.13, si ce n'est pas déjà le cas l'installer depuis [ce site](https://www.python.org/downloads/release/python-3130/)
 - cloner ce repo localement
-- lancer le programme avec la commande : python.exe tp1_associativity.py
+- lancer le programme avec la commande : python3 tp1_associativity.py
 - le résultat doit être 92.61%
 ---
