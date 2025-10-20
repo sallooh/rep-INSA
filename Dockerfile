@@ -1,5 +1,4 @@
-FROM python:3.13-bullseye
-
+FROM python:3.12
 WORKDIR /usr/src/app
 
 # Installer Go, Git et dépendances minimales
