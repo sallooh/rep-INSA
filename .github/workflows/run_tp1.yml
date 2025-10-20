@@ -22,24 +22,15 @@ jobs:
     - name: Build Docker image
       run: docker build -t associativity .
 
-    - name: Run container
+    - name: Run container and generate results
       run: |
-        # Monte le workspace et exécute le script principal
         docker run --rm -v ${{ github.workspace }}:/usr/src/app/out associativity
-
-        # Exécute le script de génération/variation si présent
-        if [ -f generate_and_run_all.py ]; then
-          python3 generate_and_run_all.py
-        fi
 
     - name: Commit and push results
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
         ls -l  # debug : vérifier que les fichiers existent
-
-        # Ajouter tous les fichiers de résultat existants (*.txt, *.csv, *.md)
-        git add *.txt *.csv *.md
-
+        git add *.txt *.csv *.md || echo "No files to add"
         git commit -m "Update associativity and variability results" || echo "No changes to commit"
         git push

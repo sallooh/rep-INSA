@@ -1,18 +1,22 @@
-FROM python:3.13
+FROM python:3.13-slim
 
 WORKDIR /usr/src/app
 
-# Installer Go et Git
-RUN apt-get update && apt-get install -y golang git && rm -rf /var/lib/apt/lists/*
+# Installer Go, Git et dépendances minimales
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends golang git && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copier les scripts
+# Copier les scripts dans le conteneur
 COPY tp1_associativity.py ./
 COPY tp1_associativity_go.go ./
+COPY generate_and_run_all.py ./
 
-# Créer un dossier pour les sorties
+# Créer un dossier pour les fichiers de sortie
 RUN mkdir -p /usr/src/app/out
 
-# Exécuter les deux tests et copier les résultats à la fin
+# Exécuter Python et Go, puis déplacer les résultats dans /out
 CMD python3 tp1_associativity.py && \
+    python3 generate_and_run_all.py && \
     go run tp1_associativity_go.go && \
-    cp /usr/src/app/*.txt /usr/src/app/out/
+    cp *.txt *.csv /usr/src/app/out/
