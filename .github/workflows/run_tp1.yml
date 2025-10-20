@@ -39,6 +39,7 @@ jobs:
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
-        git add answer_associativity.txt answer_associativity_llm.txt answer_associativity_seed.txt LLM_associativity.md
+        ls -l  # debug : vérifier que les fichiers existent
+        git add *.txt LLM_associativity.md
         git commit -m "Update associativity results" || echo "No changes to commit"
         git push
