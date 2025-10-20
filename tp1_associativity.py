@@ -3,6 +3,7 @@ import random
 
 def test_associativity(n=10000):
     """Test how often (x + y) + z == x + (y + z) for random floats."""
+    random.seed(42)  # <--- FACTOR: fix seed to impact the result
     success = 0
 
     for _ in range(n):
