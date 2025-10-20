@@ -1,11 +1,18 @@
 FROM python:3.13
+
 WORKDIR /usr/src/app
 
-# Installer git pour permettre un commit/push
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Installer Go et Git
+RUN apt-get update && apt-get install -y golang git && rm -rf /var/lib/apt/lists/*
 
-# Copier le script
+# Copier les scripts
 COPY tp1_associativity.py ./
+COPY tp1_associativity_go.go ./
 
-# Exécuter le script directement en root
-CMD ["python3", "tp1_associativity.py"]
+# Créer un dossier pour les sorties
+RUN mkdir -p /usr/src/app/out
+
+# Exécuter les deux tests et copier les résultats à la fin
+CMD python3 tp1_associativity.py && \
+    go run tp1_associativity_go.go && \
+    cp /usr/src/app/*.txt /usr/src/app/out/
