@@ -1,10 +1,17 @@
 name: Run Associativity Test
 
+# Permet de lancer manuellement ou sur push
 on:
   push:
     branches:
       - main
+      - variation_seed   # ajoute la branche de variation
   workflow_dispatch:
+    inputs:
+      script:
+        description: 'Quel script Python exécuter ?'
+        required: true
+        default: 'tp1_associativity.py'  # valeur par défaut pour main
 
 jobs:
   build-and-run:
@@ -22,15 +29,16 @@ jobs:
     - name: Build Docker image
       run: docker build -t associativity .
 
-    - name: Run container
+    - name: Run container with selected script
       run: |
-        docker run --rm -v ${{ github.workspace }}:/usr/src/app/out associativity
+        echo "Running script: ${{ github.event.inputs.script }}"
+        docker run --rm -v ${{ github.workspace }}:/usr/src/app/out \
+        -e SCRIPT_NAME="${{ github.event.inputs.script }}" associativity /bin/bash -c "python3 \$SCRIPT_NAME"
 
     - name: Commit and push results
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
-        ls -l  # debug : vérifier que les fichiers existent
-        git add answer_associativity.txt answer_associativity_llm.txt LLM_associativity.md
-        git commit -m "Update associativity results (Python + Go)" || echo "No changes to commit"
+        git add answer_associativity.txt answer_associativity_llm.txt answer_associativity_seed.txt LLM_associativity.md
+        git commit -m "Update associativity results" || echo "No changes to commit"
         git push
