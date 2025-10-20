@@ -1,0 +1,3 @@
+Sur 10000 tests :
+ - Succès exacts : 9259
+ - Pourcentage de réussite : 92.590000%

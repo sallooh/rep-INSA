@@ -4,13 +4,12 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # permet de lancer manuellement
+  workflow_dispatch:
 
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
 
-    # Donne au GITHUB_TOKEN le droit d'écrire
     permissions:
       contents: write
 
@@ -18,18 +17,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        persist-credentials: true  # nécessaire pour push
+        persist-credentials: true
 
     - name: Build Docker image
       run: docker build -t associativity .
 
     - name: Run container
-      run: docker run --name assoc_run associativity
+      run: |
+        docker run --rm -v ${{ github.workspace }}:/usr/src/app/out associativity
 
-    - name: Push results
+    - name: Commit and push results
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
-        git add answer_associativity.txt
-        git commit -m "Update answer_associativity.txt from CI" || echo "No changes to commit"
+        ls -l  # debug : vérifier que les fichiers existent
+        git add answer_associativity.txt answer_associativity_llm.txt LLM_associativity.md
+        git commit -m "Update associativity results (Python + Go)" || echo "No changes to commit"
         git push
