@@ -1,0 +1,17 @@
+import random
+
+def test_property(n={{ repetitions }}, seed={{ seed }}):
+    {% if seed is not none %}
+    random.seed({{ seed }})
+    {% endif %}
+    success = 0
+    for _ in range(n):
+        x = random.uniform({{ range_min }}, {{ range_max }})
+        y = random.uniform({{ range_min }}, {{ range_max }})
+        z = random.uniform({{ range_min }}, {{ range_max }})
+        if {{ operation1 }} == {{ operation2 }}:
+            success += 1
+    print(f"Tests: {n}, Success: {success}, %: {success/n*100:.6f}")
+
+if __name__ == "__main__":
+    test_property()

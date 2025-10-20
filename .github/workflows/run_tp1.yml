@@ -1,4 +1,4 @@
-name: Run Associativity Test
+name: Run Associativity Test and Explore Variability
 
 on:
   push:
@@ -24,13 +24,22 @@ jobs:
 
     - name: Run container
       run: |
+        # Monte le workspace et exécute le script principal
         docker run --rm -v ${{ github.workspace }}:/usr/src/app/out associativity
+
+        # Exécute le script de génération/variation si présent
+        if [ -f generate_and_run_all.py ]; then
+          python3 generate_and_run_all.py
+        fi
 
     - name: Commit and push results
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
         ls -l  # debug : vérifier que les fichiers existent
-        git add answer_associativity.txt answer_associativity_llm.txt LLM_associativity.md
-        git commit -m "Update associativity results (Python + Go)" || echo "No changes to commit"
+
+        # Ajouter tous les fichiers de résultat existants (*.txt, *.csv, *.md)
+        git add *.txt *.csv *.md
+
+        git commit -m "Update associativity and variability results" || echo "No changes to commit"
         git push
