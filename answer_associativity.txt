@@ -1,3 +1,26 @@
-Sur 10000 tests :
- - Succès exacts : 9235
- - Pourcentage de réussite : 92.350000%
+Results for 100000 tests per range:
+
+Range -1e+00 to 1e+00:
+  - Exact matches: 100000
+  - Percentage: 100.000000%
+
+Range -1e+03 to 1e+03:
+  - Exact matches: 93037
+  - Percentage: 93.037000%
+
+Range -1e+06 to 1e+06:
+  - Exact matches: 93108
+  - Percentage: 93.108000%
+
+Range -1e+09 to 1e+09:
+  - Exact matches: 93188
+  - Percentage: 93.188000%
+
+Range -1e+12 to 1e+12:
+  - Exact matches: 92918
+  - Percentage: 92.918000%
+
+Range -1e+16 to 1e+16:
+  - Exact matches: 92330
+  - Percentage: 92.330000%
+
