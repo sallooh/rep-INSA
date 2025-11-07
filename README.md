@@ -58,6 +58,7 @@ Autres fichiers principaux :
 
 ### 🐍 Python
 ```bash
+python3 tp1_associativity.py
 python3 banking_experiment/generate_and_run_all_banking.py
 python3 generate_and_run_all.py
 ```
