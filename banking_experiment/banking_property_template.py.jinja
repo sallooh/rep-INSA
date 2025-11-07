@@ -1,0 +1,32 @@
+import random
+from decimal import Decimal, getcontext
+
+def banking_simulation(initial_money={{ initial_money }}, years={{ years }}, fee={{ fee }},
+                       stochastic_fee={{ stochastic_fee|lower }}, seed={{ seed }},
+                       precision="{{ precision }}"):
+    {% if seed is not none %}
+    random.seed({{ seed }})
+    {% endif %}
+    if precision == "decimal":
+        getcontext().prec = 50
+        money = Decimal(str(initial_money))
+        fee_val = Decimal(str(fee))
+    else:
+        money = float(initial_money)
+        fee_val = float(fee)
+
+    for i in range(1, years + 1):
+        current_fee = fee_val
+        if stochastic_fee:
+            fluct = random.uniform(-0.1, 0.1)
+            if precision == "decimal":
+                current_fee += Decimal(str(fluct))
+            else:
+                current_fee += fluct
+        money = (money - current_fee) * i
+
+    money -= (Decimal(1) if precision == "decimal" else 1.0)
+    print(f"{float(money)}")
+
+if __name__ == "__main__":
+    banking_simulation()

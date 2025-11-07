@@ -10,6 +10,7 @@ RUN apt-get update && \
 COPY tp1_associativity.py ./
 COPY tp1_associativity_go.go ./
 COPY generate_and_run_all.py ./
+COPY banking_experiment/generate_and_run_all_banking.py ./
 
 # Créer un dossier pour les fichiers de sortie
 RUN mkdir -p /usr/src/app/out
@@ -18,4 +19,6 @@ RUN mkdir -p /usr/src/app/out
 CMD python3 tp1_associativity.py && \
     python3 generate_and_run_all.py && \
     go run tp1_associativity_go.go && \
+    python3 generate_and_run_all_banking.py && \
     cp *.txt *.csv /usr/src/app/out/
+

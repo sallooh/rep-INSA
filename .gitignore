@@ -1,5 +1,6 @@
 # Virtual environments
 .venv/
+venv/
 
 # Nix garbage collection roots & profiles
 .nix-gcroots/
